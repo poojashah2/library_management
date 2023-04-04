@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="issue_book_info_tree_view" model="ir.ui.view">
+			<field name="name">issue.book.info.tree</field>
+			<field name="model">issue.book.info</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="user_name_id"/>
+					<field name="books_line_ids"/>
+					<field name="user_contact_no"/>
+					<field name="user_email"/>
+					<field name="user_address"/>
+				</tree>
+			</field>
+		</record>
+		<record id="issue_book_info_form_view" model="ir.ui.view">
+			<field name="name">issue.book.info.form</field>
+			<field name="model">issue.book.info</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="user_name_id"/>
+							<field name="books_line_ids"/>
+							<field name="user_contact_no"/>
+							<field name="user_email"/>
+							<field name="user_address"/>
+							<field name="issue_date"/>
+							<field name="return_date"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_issue_book_info" model="ir.actions.act_window">
+		   <field name="name">Issue Book Info</field>
+		   <field name="res_model">issue.book.info</field>
+		   <field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="issue_book_info" name="Issue Book" sequence="5" action="action_issue_book_info" parent="library_management"/>
+	</data>
+</odoo>
