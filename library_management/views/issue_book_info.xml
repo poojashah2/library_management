@@ -19,6 +19,11 @@
 			<field name="model">issue.book.info</field>
 			<field name="arch" type="xml">
 				<form>
+					<header>
+						<button name="issued_book_view" class="oe_highlight" states="draft" string="Issue" type="object"/>
+						<button name="return_book_view" class="oe_highlight" states="issue" string="Return" type="object"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,issue,return"/>
+					</header>
 					<sheet>
 						<group>
 							<field name="user_name_id"/>
