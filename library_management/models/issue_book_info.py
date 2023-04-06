@@ -16,28 +16,39 @@ class IssueBookInfo(models.Model):
 
 
 	def issued_book_view(self):
+		# fields = ['entry_id','book_code']
 		register = self.env['register.date.info']
+		# register = self.env['register.date.info'].read_group([('book_code','=','B010')], fields)
 		for rec in self:
 			rec.write({'state':"issue"})
 			rec.issue_date = date.today()
 			for line in rec.books_line_ids:
 				for _ in range(line.issue_quantity or 1):
 					register.create({
+							'entry_id' : rec.books_line_ids,
 							'book_code': line.book_name_id.book_no,
 							'incoming_date': rec.issue_date
 						})
+		# book_detail = self.env['book.details.info'].search([('name','=',self.books_line_ids.book_name_id.name)])
+		# for record in book_detail:
+		# 	record.book_count = record.book_quantity - self.books_line_ids.issue_quantity 
+		# print("::::::::;",book_detail.book_quantity)
 			# incoming_date = rec.books_line_ids.book_name_id
 			# model_rec = self.env['register.date.info'].create(incoming_date)
 			# print(incoming_date)
 
 	def return_book_view(self):
 		print("\n\n\n\n", self.books_line_ids.id)
-		register = self.env['register.date.info'].search([])
 		for rec in self:
 			rec.write({'state':"return"})
 			rec.return_date = date.today()
-			for line in register:
-				register.write({'outgoing_date':rec.return_date})
+		for line in self.books_line_ids:
+			register = self.env['register.date.info'].search([("entry_id",'=',line.id)])
+			register.entry_id = rec.return_date
+		# book_detail = self.env['book.details.info'].search([('name','=',self.books_line_ids.book_name_id.name)])
+		# for record in book_detail:
+		# 	record.book_count += self.books_line_ids.issue_quantity 
+
 
 
 	@api.onchange("user_name_id")

@@ -21,6 +21,14 @@
 			<field name="arch" type="xml">
 				<form>
 					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="action_book_count"
+	                                type="object"
+	                                class="oe_stat_button"
+	                                icon="fa-pencil-square-o" string="Book">
+	                                <field name="book_count"/>
+	                        </button>
+	                    </div>
 						<group>
 							<field name="book_no"/>
 							<field name="name"/>

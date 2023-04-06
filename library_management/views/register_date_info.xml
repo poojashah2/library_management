@@ -6,6 +6,7 @@
 			<field name="model">register.date.info</field>
 			<field name="arch" type="xml">
 				<tree>
+					<field name="entry_id"/>
 					<field name="book_code"/>
 					<field name="incoming_date"/>
 					<field name="outgoing_date"/>
@@ -19,6 +20,7 @@
 				<form>
 					<sheet>
 						<group>
+							<field name="entry_id"/>
 							<field name="book_code"/>
 							<field name="incoming_date"/>
 							<field name="outgoing_date"/>

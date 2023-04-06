@@ -9,6 +9,7 @@ class BookDeatailsInfo(models.Model):
 	pages = fields.Integer(string="Pages")
 	author_name_id = fields.Many2one('book.author.info',string="Author name")
 	book_quantity = fields.Integer(string="Books Quantity")
+	book_count =fields.Integer(string="Book count")
 
 	@api.model
 	def create(self, vals):
@@ -32,3 +33,13 @@ class BookDeatailsInfo(models.Model):
 		if name:
 			args = ['|','|',('book_no',operator,name),('name',operator,name),('author_name_id',operator,name)]
 		return self._search(args, limit=limit, access_rights_uid=name_get_uid)
+
+	def action_book_count(self):
+		print(":::::::::::::::")
+		issue = self.env['issue.book.info'].search([])
+		for rec in issue.books_line_ids:
+			if rec.book_name_id.name in self.name:
+				self.book_count = self.book_quantity - rec.issue_quantity
+			print("::::::::::::",rec.book_name_id)
+		# 	print("\n\n\n::::::::::",rec.books_line_ids.issue_quantity)
+		# # for rec in self:
