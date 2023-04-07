@@ -9,7 +9,8 @@ class BookDeatailsInfo(models.Model):
 	pages = fields.Integer(string="Pages")
 	author_name_id = fields.Many2one('book.author.info',string="Author name")
 	book_quantity = fields.Integer(string="Books Quantity")
-	book_count =fields.Integer(string="Book count")
+	book_type_ids = fields.Many2many('book.type.info',string="Book Type")
+	book_count =fields.Integer(string="Book count",compute="_compute_available_book_count")
 
 	@api.model
 	def create(self, vals):
@@ -22,8 +23,8 @@ class BookDeatailsInfo(models.Model):
 	def name_get(self):
 		result = []
 		for rec in self:
-			name = rec.book_no + ' '+rec.name+' '+ rec.author_name_id.name
-			result.append((rec.id,name))
+			n = str(rec.book_no) + ' '+str(rec.name)+' '+ str(rec.author_name_id.name)
+			result.append((rec.id,n))
 		return result
 
 
@@ -34,12 +35,25 @@ class BookDeatailsInfo(models.Model):
 			args = ['|','|',('book_no',operator,name),('name',operator,name),('author_name_id',operator,name)]
 		return self._search(args, limit=limit, access_rights_uid=name_get_uid)
 
+	def _compute_available_book_count(self):
+		# model_rec = self.env['register.date.info'].search([])
+		search_rec = self.env['register.date.info'].search_count([('book_code','=',self.id),('incoming_date','=',False)])
+		# model_rec = self.env['register.date.info'].search_count([('book_code','=',self.book_no),('incoming_date','!=',False),('outgoing_date','')])
+		print("::::",search_rec)
+		self.book_count = self.book_quantity - int(search_rec)
+		# elif model_rec:
+		# 	self.book_count += model_rec
+		# if search_rec:
+
 	def action_book_count(self):
 		print(":::::::::::::::")
-		issue = self.env['issue.book.info'].search([])
-		for rec in issue.books_line_ids:
-			if rec.book_name_id.name in self.name:
-				self.book_count = self.book_quantity - rec.issue_quantity
-			print("::::::::::::",rec.book_name_id)
+		# counting = 0 
+		# issue = self.env['issue.book.info'].search([])
+		# for rec in issue.books_line_ids:
+		# 	if self.env["issue.book.info"].search([("issue_date", "=", datetime.date.today())]):
+		# 		if rec.book_name_id.name in self.name:
+		# 			counting += rec.issue_quantity
+		# 			self.book_count = self.book_quantity - counting
+		# 		print("::::::::::::",rec.book_name_id)
 		# 	print("\n\n\n::::::::::",rec.books_line_ids.issue_quantity)
 		# # for rec in self:

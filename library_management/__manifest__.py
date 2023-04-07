@@ -11,6 +11,7 @@
         'views/register_books_info.xml',
         'views/issue_book_info.xml',
         'views/register_date_info.xml',
+        'views/book_type_info.xml',
     ],
     'installable' : True,
     'application' : True,
