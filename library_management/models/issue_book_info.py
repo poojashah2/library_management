@@ -13,7 +13,18 @@ class IssueBookInfo(models.Model):
 	return_date = fields.Date(string="Return Date",readonly=True)
 	state = fields.Selection(selection=[('draft','Draft'),('issue','Issued'),('return','Return')],string="Status",required=True,copy=False,tracking=True,default='draft',readonly=True)
 
-	
+	def unlink(self):
+		model_rec = self.env['register.books.info'].search([('id','=',self.books_line_ids.ids)])
+		for rec in model_rec:
+			rec.unlink()
+			print("ncfbbcfedfbcvd",rec)
+		return super(IssueBookInfo,self).unlink()
+
+
+	# def unlink(self):
+	# 	for rec in self.books_line_ids:
+	# 		self.env["register.books.info"].search([('id','=',rec.id)]).unlink()
+	# 	return super(IssueBookInfo,self).unlink()
 
 	def issued_book_view(self):
 		for rec in self:
@@ -27,6 +38,12 @@ class IssueBookInfo(models.Model):
 						"book_code": line.book_name_id.id,
 					}]
 					create_data = self.env["register.date.info"].create(register_id)
+		vals = {
+			"book_name_id" : "33",
+			"issue_quantity" : 2,
+		}
+		self.write({'books_line_ids' : [(0,0,vals)]})
+
 
 	def return_book_view(self):
 		for rec in self:

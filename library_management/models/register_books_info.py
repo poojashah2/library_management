@@ -13,10 +13,13 @@ class RegisterBooksInfo(models.Model):
 	@api.onchange('book_name_id')
 	def _onchange_book_type(self):
 		for rec in self:
-			book_type = self.env['book.details.info'].search([]).book_type_ids.ids
-			rec.update({
-				'book_type_ids':[(4,booktype) for booktype in book_type]
-				})
+			book_type = self.env['book.details.info'].search([('id', '=', self.book_name_id.id)])
+			print(":::::::::;>>>>>>>>>>>",book_type.id,self.book_name_id.id)
+			for record in book_type:
+				if record.id == self.book_name_id.id:
+					rec.update({
+						'book_types_ids':[(6,0,record.book_type_ids.ids)]
+						})
 	# @api.model
 	# def create(self, vals):
 	# 	search_rec = self.env['book.details.info'].search(['name','=',self.book_name_id])

@@ -11,7 +11,7 @@ class BookDeatailsInfo(models.Model):
 	book_quantity = fields.Integer(string="Books Quantity")
 	book_type_ids = fields.Many2many('book.type.info',string="Book Type")
 	book_count =fields.Integer(string="Book count",compute="_compute_available_book_count")
-
+	
 	@api.model
 	def create(self, vals):
 		if not vals.get('book_no'):
