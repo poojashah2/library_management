@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 from datetime import datetime
+from odoo.exceptions import ValidationError
 
 class RegisterBooksInfo(models.Model):
 	_name = 'register.books.info'
@@ -20,6 +21,20 @@ class RegisterBooksInfo(models.Model):
 					rec.update({
 						'book_types_ids':[(6,0,record.book_type_ids.ids)]
 						})
+	# def unlink(self):
+	# 	model_rec = self.env['issue.book.info'].search([]).books_line_ids.book_name_id
+	# 	for rec in model_rec:
+	# 		for record in self.book_name_id:
+	# 			print(">>>>>>>>>>")
+	# 			if rec.id != record.id:
+	# 				return super (RegisterBooksInfo,self).unlink()
+					# raise ValidationError("YOU CANONOT DELETE THIS RECORD")
+			
+	# 	# model_rec = self.env['issue.book.info'].search([('books_line_ids','=',self.id)]).id
+	# 	print("\n\n\n rfgugh",model_rec)
+	# 	# for rec in model_rec:
+		# 	if rec:
+
 	# @api.model
 	# def create(self, vals):
 	# 	search_rec = self.env['book.details.info'].search(['name','=',self.book_name_id])

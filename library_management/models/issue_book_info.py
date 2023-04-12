@@ -62,6 +62,8 @@ class IssueBookInfo(models.Model):
 		for rec in self:
 			rec.user_email = ""
 			if rec.user_name_id:
+				model_rec = self.env['res.partner'].search_read([("id", "=", rec.user_name_id.id)],['email','phone','street','street2'])
+				print("\n\n\n>>>>>>>>>>>>",model_rec)
 				res_data = self.env["res.partner"].search([("id", "=", rec.user_name_id.id)])
 				rec.user_email = res_data.email
 				rec.user_contact_no = res_data.phone
@@ -69,7 +71,6 @@ class IssueBookInfo(models.Model):
 					rec.user_address = str(res_data.street)+"\n"+str(res_data.zip)+"\n"+str(res_data.city)
 				else:
 					rec.user_address = str(res_data.street)+"\n"+str(res_data.street2)+"\n"+str(res_data.zip)+"\n"+str(res_data.city)
-
 
 
 	def _compute_submission_deadline(self):
