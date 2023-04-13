@@ -32,8 +32,8 @@ class IssueBookInfo(models.Model):
 
 	def issued_book_view(self):
 		for rec in self:
-			rec.write({'state':"issue"})
-			rec.issue_date = date.today()
+			# rec.write({'state':"issue"})
+			# rec.issue_date = date.today()
 			for line in self.books_line_ids:
 				for _ in range(line.issue_quantity):
 					register_id = [{
@@ -42,6 +42,16 @@ class IssueBookInfo(models.Model):
 						"book_code": line.book_name_id.id,
 					}]
 					create_data = self.env["register.date.info"].create(register_id)
+		return {
+			"type" : "ir.actions.act_window",
+			"res_model" : "issue.date.wizard",
+			"name" : ("issue_date"),
+			"view_mode" : "form",
+			"target" : "new",
+			"context" : {
+				"default_issued_date" : date.today()
+			}
+		}
 		# vals = {
 		# 	"book_name_id" : "33",
 		# 	"issue_quantity" : 2,

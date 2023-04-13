@@ -21,3 +21,5 @@ class BookTypeInfo(models.Model):
 		else:
 			number = 1
 		return '%s - %s' % (name, number)
+
+	
