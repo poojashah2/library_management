@@ -7,7 +7,9 @@
 			<field name="arch" type="xml">
 				<tree>
 					<field name="entry_id"/>
+					<field name="customer_name"/>
 					<field name="book_code"/>
+					<field name="books_name"/>
 					<field name="incoming_date"/>
 					<field name="outgoing_date"/>
 				</tree>
@@ -21,7 +23,9 @@
 					<sheet>
 						<group>
 							<field name="entry_id"/>
+							<field name="customer_name"/>
 							<field name="book_code"/>
+							<field name="books_name"/>
 							<field name="incoming_date"/>
 							<field name="outgoing_date"/>
 						</group>

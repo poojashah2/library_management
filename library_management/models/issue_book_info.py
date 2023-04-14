@@ -16,7 +16,7 @@ class IssueBookInfo(models.Model):
 	issue_date = fields.Date(string="Issue Date", readonly=True)
 	return_date = fields.Date(string="Return Date",readonly=True)
 	state = fields.Selection(selection=[('draft','Draft'),('issue','Issued'),('return','Return')],string="Status",required=True,copy=False,tracking=True,default='draft',readonly=True)
-
+	iss_email = fields.Char(string="extra field")
 	def unlink(self):
 		model_rec = self.env['register.books.info'].search([('id','=',self.books_line_ids.ids)])
 		for rec in model_rec:
@@ -31,32 +31,36 @@ class IssueBookInfo(models.Model):
 	# 	return super(IssueBookInfo,self).unlink()
 
 	def issued_book_view(self):
-		for rec in self:
-			# rec.write({'state':"issue"})
-			# rec.issue_date = date.today()
-			for line in self.books_line_ids:
-				for _ in range(line.issue_quantity):
-					register_id = [{
-						"entry_id": line.id,
-						"outgoing_date": self.issue_date,
-						"book_code": line.book_name_id.id,
-					}]
-					create_data = self.env["register.date.info"].create(register_id)
+		# for rec in self:
+		# 	# rec.write({'state':"issue"})
+		# 	# rec.issue_date = date.today()
+		# 	for line in self.books_line_ids:
+		# 		for _ in range(line.issue_quantity):
+		# 			register_id = [{
+		# 				"entry_id": line.id,
+		# 				"outgoing_date": self.issue_date,
+		# 				"book_code": line.book_name_id.id,
+		# 				"books_name":line.book_name_id.name,
+		# 				"customer_name":self.user_name_id.name,
+		# 			}]
+		# 			create_data = self.env["register.date.info"].create(register_id)
 		return {
 			"type" : "ir.actions.act_window",
 			"res_model" : "issue.date.wizard",
 			"name" : ("issue_date"),
 			"view_mode" : "form",
 			"target" : "new",
-			"context" : {
-				"default_issued_date" : date.today()
-			}
 		}
 		# vals = {
 		# 	"book_name_id" : "33",
 		# 	"issue_quantity" : 2,
 		# }
 		# self.write({'books_line_ids' : [(0,0,vals)]})
+
+	# def issue_book_mail(self):
+	# 	template = self.env.ref('library_management.issue_book_mail_id').id
+	# 	template_id = self.env['mail.template'].browse(template)
+	# 	template_id.send_mail(self.id, force_send=True)
 
 
 	def return_book_view(self):

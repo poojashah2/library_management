@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="issue_book_mail_id" model="mail.template">
+		<field name="name">Issue Book Mail Template</field>
+		<field name="model_id" ref="library_management.model_issue_book_info"/>
+		<field name="email_from">${object.user_name_id.email_formatted}</field>
+		<field name="email_to">${object.iss_email}</field>
+		<field name="subject">Issue book detail</field>
+		<field name="body_html" type="html">
+			<p>Hello world</p>
+		</field>
+	</record>
+</odoo>
