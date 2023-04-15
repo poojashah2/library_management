@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+library_management.access_book_author_info,access_book_author_info,library_management.model_book_author_info,base.group_user,1,1,1,1
+library_management.access_book_details_info,access_book_details_info,library_management.model_book_details_info,base.group_user,1,1,1,1
+library_management.access_register_books_info,access_register_books_info,library_management.model_register_books_info,base.group_user,1,1,1,1
+library_management.access_issue_book_info,access_issue_book_info,library_management.model_issue_book_info,base.group_user,1,1,1,1
+library_management.access_register_date_info,access_register_date_info,library_management.model_register_date_info,base.group_user,1,1,1,1
+library_management.access_book_type_info,access_book_type_info,library_management.model_book_type_info,base.group_user,1,1,1,1
+library_management.access_issue_date_wizard,access_issue_date_wizard,library_management.model_issue_date_wizard,base.group_user,1,1,1,1
