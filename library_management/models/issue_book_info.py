@@ -16,7 +16,7 @@ class IssueBookInfo(models.Model):
 	issue_date = fields.Date(string="Issue Date", readonly=True)
 	return_date = fields.Date(string="Return Date",readonly=True)
 	state = fields.Selection(selection=[('draft','Draft'),('issue','Issued'),('return','Return')],string="Status",required=True,copy=False,tracking=True,default='draft',readonly=True)
-	iss_email = fields.Char(string="extra field")
+
 	def unlink(self):
 		model_rec = self.env['register.books.info'].search([('id','=',self.books_line_ids.ids)])
 		for rec in model_rec:
@@ -57,19 +57,22 @@ class IssueBookInfo(models.Model):
 		# }
 		# self.write({'books_line_ids' : [(0,0,vals)]})
 
-	# def issue_book_mail(self):
-	# 	template = self.env.ref('library_management.issue_book_mail_id').id
-	# 	template_id = self.env['mail.template'].browse(template)
-	# 	template_id.send_mail(self.id, force_send=True)
+	def issue_book_mail(self):
+		# template=self.env.ref('library_management.issue_book_mail_id')
+		# for rec in self:
+		#     template.send_mail(int(rec.id),force_send=True)
+		template = self.env.ref('library_management.issue_book_mail_id').id
+		template_id = self.env['mail.template'].browse(template)
+		template_id.send_mail(self.id, force_send=True)
 
 
-	def return_book_view(self):
-		for rec in self:
-			rec.write({'state':"return"})
-			rec.return_date = date.today()
-		for line in self.books_line_ids:
-			register = self.env['register.date.info'].search([("entry_id",'=',line.id)])
-			register.incoming_date = rec.return_date
+	# def return_book_view(self):
+	# 	for rec in self:
+	# 		rec.write({'state':"return"})
+	# 		rec.return_date = date.today()
+	# 	for line in self.books_line_ids:
+	# 		register = self.env['register.date.info'].search([("entry_id",'=',line.id)])
+	# 		register.incoming_date = rec.return_date
 
 	@api.onchange("user_name_id")
 	def _onchange_field_fill(self):

@@ -13,7 +13,7 @@
 					<field name="user_address"/>
 					<field name="submission_deadline"/>
 					<field name="charges"/>
-					<field name="iss_email"/>
+					<!-- <field name="iss_email"/> -->
 					<field name="book_names_id"/>
 					<field name="quantity"/>
 				</tree>
@@ -26,9 +26,9 @@
 				<form>
 					<header>
 						<button name="issued_book_view" class="oe_highlight" states="draft" string="Issue" type="object"/>
-						<button name="return_book_view" class="oe_highlight" states="issue" string="Return" type="object"/>
+						<!-- <button name="return_book_view" class="oe_highlight" states="issue" string="Return" type="object"/> -->
 						<field name="state" widget="statusbar" statusbar_visible="draft,issue,return"/>
-						<!-- <button name="issue_book_mail" class="oe_highlight" string="Send mail" type="object"/> -->
+						<button name="issue_book_mail" class="oe_highlight" string="Send mail" type="object"/>
 					</header>
 					<sheet>
 						<group>
@@ -40,7 +40,7 @@
 								<field name="issue_date"/>
 								<field name="submission_deadline"/>
 								<field name="charges"/>
-								<field name="iss_email"/>
+								<!-- <field name="iss_email"/> -->
 								<field name="return_date"/>
 							</group>
 							<group>

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 	<data>
-		<record id="register_date_info_tree_view" model="ir.ui.view">
+		<record id="register_date_info_tree_view"  model="ir.ui.view">
 			<field name="name">register.date.info.tree</field>
 			<field name="model">register.date.info</field>
 			<field name="arch" type="xml">
-				<tree>
+				<tree decoration-danger="incoming_date == False" decoration-success="incoming_date != False">
 					<field name="entry_id"/>
 					<field name="customer_name"/>
 					<field name="book_code"/>
 					<field name="books_name"/>
 					<field name="incoming_date"/>
 					<field name="outgoing_date"/>
+					<button name="return_button" string="Return" attrs="{'invisible':[('incoming_date','!=',False)]}" class="oe_highlight" type="object"/>
 				</tree>
 			</field>
 		</record>
