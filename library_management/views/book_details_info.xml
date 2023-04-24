@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="book_details_info_tree_view" model="ir.ui.view">
+			<field name="name">book.details.info.tree</field>
+			<field name="model">book.details.info</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="book_no"/>
+					<field name="name"/>
+					<field name="price"/>
+					<field name="pages"/>
+					<field name="book_charges"/>
+					<field name="book_type_ids"/>
+					<field name="author_name_id"/>
+					<field name="book_quantity"/>
+				</tree>
+			</field>
+		</record>
+		<record id="book_details_info_form_view" model="ir.ui.view">
+			<field name="name">book.details.info.form</field>
+			<field name="model">book.details.info</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="action_book_count"
+	                                type="object"
+	                                class="oe_stat_button"
+	                                icon="fa-pencil-square-o" string="Book">
+	                                <field name="book_count"/>
+	                        </button>
+	                    </div>
+						<group>
+							<field name="book_no"/>
+							<field name="name"/>
+							<field name="price"/>
+							<field name="pages"/>
+							<field name="book_charges"/>
+							<field name="book_type_ids"/>
+							<field name="author_name_id"/>
+							<field name="book_quantity"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_book_details_info" model="ir.actions.act_window">
+		   <field name="name">Book Details Info</field>
+		   <field name="res_model">book.details.info</field>
+		   <field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="book_details_info" name="Book Details" sequence="3" action="action_book_details_info" parent="library_management"/>
+	</data>
+</odoo>

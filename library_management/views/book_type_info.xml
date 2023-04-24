@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="book_type_info_tree_view" model="ir.ui.view">
+			<field name="name">book.type.info.tree</field>
+			<field name="model">book.type.info</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="book_type_info_form_view" model="ir.ui.view">
+			<field name="name">book.type.info.form</field>
+			<field name="model">book.type.info</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="name"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_book_type_info" model="ir.actions.act_window">
+		   <field name="name">Book Type Info</field>
+		   <field name="res_model">book.type.info</field>
+		   <field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="book_type_info" name="Book Type" sequence="7" action="action_book_type_info" parent="library_management"/>
+	</data>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="register_books_info_tree_view" model="ir.ui.view">
+			<field name="name">register.books.info.tree</field>
+			<field name="model">register.books.info</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="book_name_id"/>
+					<field name="book_types_ids" widget="many2many_tags"/>
+					<field name="issue_quantity"/>
+				</tree>
+			</field>
+		</record>
+		<record id="register_books_info_form_view" model="ir.ui.view">
+			<field name="name">register.books.info.form</field>
+			<field name="model">register.books.info</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="book_name_id"/>
+							<field name="book_types_ids" widget="many2many_tags"/>
+							<field name="issue_quantity"/>
+
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_register_books_info" model="ir.actions.act_window">
+		   <field name="name">Register Books Info</field>
+		   <field name="res_model">register.books.info</field>
+		   <field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="register_books_info" name="Register Book" sequence="4" action="action_register_books_info" parent="library_management"/>
+	</data>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="register_date_info_tree_view"  model="ir.ui.view">
+			<field name="name">register.date.info.tree</field>
+			<field name="model">register.date.info</field>
+			<field name="arch" type="xml">
+				<tree decoration-danger="incoming_date == False" decoration-success="incoming_date != False">
+					<field name="entry_id"/>
+					<field name="customer_name"/>
+					<field name="book_code"/>
+					<field name="books_name"/>
+					<field name="late_charges"/>
+					<!-- <field name="final_charge"/> -->
+					<field name="incoming_date"/>
+					<field name="outgoing_date"/>
+					<field name="submission_deadline"/>
+					<button name="return_button" string="Return" attrs="{'invisible':[('incoming_date','!=',False)]}" class="oe_highlight" type="object"/>
+				</tree>
+			</field>
+		</record>
+		<record id="register_date_info_form_view" model="ir.ui.view">
+			<field name="name">register.date.info.form</field>
+			<field name="model">register.date.info</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="entry_id"/>
+							<field name="customer_name"/>
+							<field name="book_code"/>
+							<field name="books_name"/>
+							<field name="incoming_date"/>
+							<field name="outgoing_date"/>
+							<field name="submission_deadline"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_register_date_info" model="ir.actions.act_window">
+		   <field name="name">Register Date Info</field>
+		   <field name="res_model">register.date.info</field>
+		   <field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="register_date_info" name="Register Date" sequence="6" action="action_register_date_info" parent="library_management"/>
+	</data>
+</odoo>
