@@ -15,6 +15,7 @@
         'views/register_date_info.xml',
         'views/book_type_info.xml',
         'wizard/issue_date_wizard.xml',
+        'wizard/issue_book_wizard.xml',
         'report/register_date_info_report.xml',
         'report/register_date_info_report_templates.xml',
         # 'report/issue_book_info_report.xml',

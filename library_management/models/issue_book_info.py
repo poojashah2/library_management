@@ -11,7 +11,7 @@ class IssueBookInfo(models.Model):
 	user_address = fields.Text(string="User Address")
 	book_names_id = fields.Many2one('book.details.info',string="Book name")
 	quantity = fields.Integer(string="Quantity")
-	# submission_deadline = fields.Date(compute="_compute_submission_deadline",string="Return Book Deadline")
+	submission_deadline = fields.Date(compute="_compute_submission_deadline",string="Return Book Deadline")
 	charges = fields.Integer(compute="_compute_book_charges",string="Total charges")
 	issue_date = fields.Date(string="Issue Date", readonly=True)
 	return_date = fields.Date(string="Return Date",readonly=True)
@@ -24,7 +24,25 @@ class IssueBookInfo(models.Model):
 			print("ncfbbcfedfbcvd",rec)
 		return super(IssueBookInfo,self).unlink()
 
+	def _compute_submission_deadline(self):
+		for rec in self:
+			if rec.issue_date:
+				rec.submission_deadline = rec.issue_date + timedelta(days=15)
+			else:
+				rec.submission_deadline = False
 
+	def action_return_book_mail(self):
+		model_rec = self.env['register.date.info'].search([])
+		for rec in model_rec:
+			if not rec.incoming_date:
+				print("\n\n\n",rec.outgoing_date)
+				# template = self.env.ref('library_management.issue_book_mail_id').id
+				# template_id = self.env['mail.template'].browse(template)
+				# template_id.send_mail(self.id, force_send=True)
+				# return IssueBookInfo.issue_book_mail(self)
+		# if not model_rec.incoming_date:
+		# 	print("incoming_date is not available")
+		# 	self.issue_book_mail()
 	# def unlink(self):
 	# 	for rec in self.books_line_ids:
 	# 		self.env["register.books.info"].search([('id','=',rec.id)]).unlink()
@@ -77,13 +95,35 @@ class IssueBookInfo(models.Model):
 		# }
 
 
-	# def return_book_view(self):
-	# 	for rec in self:
-	# 		rec.write({'state':"return"})
-	# 		rec.return_date = date.today()
-	# 	for line in self.books_line_ids:
-	# 		register = self.env['register.date.info'].search([("entry_id",'=',line.id)])
-	# 		register.incoming_date = rec.return_date
+	def return_book_view(self):
+		for rec in self:
+			print("hfyegf")
+			# rec.write({'state':"return"})
+			# rec.return_date = date.today()
+		for line in self.books_line_ids:
+			register = self.env['register.date.info'].search([("entry_id",'=',rec.id)])
+			# for record in register:
+			# 	print("\n\n\n\n hrfgg",record.entry_id)
+				# if record.entry_id == rec.id:
+				# register.incoming_date = rec.return_date
+			# register_id = [{
+			# 		"book_name_id": line.book_name_id.name,
+			# 		"quantity":rec.quantity,
+			# 	}]
+			# create_data = self.env["issued.books.wizard"].create(register_id)
+				# create_id = {}
+
+			return {
+				"type" : "ir.actions.act_window",
+				"res_model" : "issue.book.wizard",
+				"name" : ("issue_book"),
+				"view_mode" : "form",
+				"target" : "new",
+				"context" : {
+					'default_book_name_id' : line.book_name_id.name,
+					'default_quantity' : rec.quantity
+				}
+			}
 
 	@api.onchange("user_name_id")
 	def _onchange_field_fill(self):

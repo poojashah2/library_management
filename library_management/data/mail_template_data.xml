@@ -4,11 +4,13 @@
 		<field name="name">Issue Book Mail Template</field>
 		<field name="model_id" ref="model_issue_book_info"/>
 		<!-- <field name="email_from">{{object.user_email}}</field> -->
-		<field name="email_to">{{"poojashah3121999@gmail.com"}}</field>
+		<field name="email_to">{{object.user_email}}</field>
 		<field name="subject">Issue book detail</field>
 		<field name="body_html" type="html">
 			<div>
-				<p>Hello <t t-out="object.user_name_id.name"/></p>
+				<p>Hello <t t-out="object.user_name_id.name"/>
+					your submission deadline <t t-out="object.submission_deadline"/>
+				</p>
 			</div>
 		</field>
 	</record>

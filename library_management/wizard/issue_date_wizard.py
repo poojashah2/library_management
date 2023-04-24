@@ -1,7 +1,7 @@
 from odoo import models, fields
 from datetime import date
 
-class IssueBookWizard(models.TransientModel):
+class IssueDateWizard(models.TransientModel):
 	_name = 'issue.date.wizard'
 
 	# issued_date = fields.Date(string = "Issued Date")
