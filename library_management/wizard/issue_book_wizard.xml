@@ -10,6 +10,7 @@
 						<tree string="Issued book">
 							<field name="books_name_id"/>
 							<field name="quantity"/>
+							<field name="return_quantity"/>
 						</tree>
 					</field>
 					<!-- <h2>Are you sure you want to issue book!</h2> -->

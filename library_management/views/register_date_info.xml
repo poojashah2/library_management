@@ -15,7 +15,7 @@
 					<field name="incoming_date"/>
 					<field name="outgoing_date"/>
 					<field name="submission_deadline"/>
-					<button name="return_button" string="Return" attrs="{'invisible':[('incoming_date','!=',False)]}" class="oe_highlight" type="object"/>
+					<!-- <button name="return_button" string="Return" attrs="{'invisible':[('incoming_date','!=',False)]}" class="oe_highlight" type="object"/> -->
 				</tree>
 			</field>
 		</record>

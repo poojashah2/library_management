@@ -15,9 +15,9 @@ class RegisterDateInfo(models.Model):
 	final_charge = fields.Integer(string="Charge")
 	demo_id = fields.Many2one('issue.book.info')
 
-	def return_button(self):
-		self.incoming_date = date.today()
-		print("return books")
+	# def return_button(self):
+	# 	self.incoming_date = date.today()
+	# 	print("return books")
 			# for record in model_rec:
 			# 	if record == rec.entry_id and incoming_date != False:
 			# 		record.write({'state':'return'})

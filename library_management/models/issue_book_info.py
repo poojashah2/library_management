@@ -98,43 +98,26 @@ class IssueBookInfo(models.Model):
 	def return_book_view(self):
 		for rec in self:
 			print("hfyegf")
-			# rec.write({'state':"return"})
-			# rec.return_date = date.today()
-		for line in self.books_line_ids:
-			register = self.env['register.date.info'].search([("entry_id",'=',rec.id)])
-			model_rec = self.env['issue.book.wizard'].search([])
-			# for rec in model_rec:
-			# vals = {
-			# 	"books_name_id" : line.book_name_id.name,
-			# 	"quantity" : 2,
-			# }
-			# model_rec.create({'books_ids':[(0,0,vals)]})
+			# register = self.env['register.date.info'].search([("entry_id",'=',rec.id),('incoming_date','!=',False)])
 			# for record in register:
-			# 	print("\n\n\n\n hrfgg",record.entry_id)
-				# if record.entry_id == rec.id:
-				# register.incoming_date = rec.return_date
-			# register_id = [{
-			# 		"book_name_id": line.book_name_id.name,
-			# 		"quantity":rec.quantity,
-			# 	}]
-			# create_data = self.env["issued.books.wizard"].create(register_id)
-				# create_id = {}
-			# vals = {
-			# 	"books_name_id" : ,
-			# 	"issue_quantity" : 2,
-			# }
-			# self.write({'books_name_id' : [(0,0,line.book_name_id.name)]})
-			return {
-				"type" : "ir.actions.act_window",
-				"res_model" : "issue.book.wizard",
-				"name" : ("issue_book"),
-				"view_mode" : "form",
-				"target" : "new",
-				# "context" : {
-				# 	'default_books_name_id' : line.book_name_id.name,
-				# 	'default_quantity' : rec.quantity
-				# }
+			# 	rec.write({'state':"return"})
+			# rec.return_date = date.today()
+		data_list = []
+		for line in self.books_line_ids:
+			# model_rec = self.env['issue.book.wizard'].search([])
+			data_list.append((0,0,{'books_name_id':line.book_name_id.id,
+				'quantity':line.issue_quantity}))
+
+		return {
+			"type" : "ir.actions.act_window",
+			"res_model" : "issue.book.wizard",
+			"name" : ("issue_book"),
+			"view_mode" : "form",
+			"target" : "new",
+			"context" : {
+				'default_books_ids' : data_list
 			}
+		}
 
 	@api.onchange("user_name_id")
 	def _onchange_field_fill(self):
@@ -166,8 +149,8 @@ class IssueBookInfo(models.Model):
 						value_list.append(True)
 					else:
 						value_list.append(False)
-				if all(value_list):
-					self.write({"state": "return"})
+				# if all(value_list):
+				# 	self.write({"state": "return"})
 
 				# for record in rec.books_line_ids:
 				# 	model_rec =self.env['book.details.info'].search([('id','=',record.book_name_id.id)])
