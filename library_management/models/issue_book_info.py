@@ -1,8 +1,10 @@
 from odoo import models, fields, api, _
 from datetime import date,timedelta
+from odoo.exceptions import ValidationError
 
 class IssueBookInfo(models.Model):
 	_name = 'issue.book.info'
+	_inherit = 'mail.thread'
 
 	user_name_id = fields.Many2one('res.partner',string="User name")
 	books_line_ids = fields.One2many('register.books.info','books_line_id',string="Books")
@@ -16,6 +18,20 @@ class IssueBookInfo(models.Model):
 	issue_date = fields.Date(string="Issue Date", readonly=True)
 	return_date = fields.Date(string="Return Date",readonly=True)
 	state = fields.Selection(selection=[('draft','Draft'),('issue','Issued'),('return','Return')],string="Status",required=True,copy=False,tracking=True,default='draft',readonly=True)
+	nationality = fields.Selection(selection=[('india','India'),('pakistan','Pakistan')],string="Nationality")
+
+	def pass_context_button(self):
+		# if 'aaaa' in self._context:
+			# context = dict(self.env.context or {})
+			# context['pass'] = 'india'
+			return {
+				"type" : "ir.actions.act_window",
+				"res_model" : "pass.context.wizard",
+				"name" : ("pass_context"),
+				"view_mode" : "form",
+				"target" : "new",
+				# "context" : context,
+			}
 
 	def unlink(self):
 		model_rec = self.env['register.books.info'].search([('id','=',self.books_line_ids.ids)])
@@ -32,13 +48,13 @@ class IssueBookInfo(models.Model):
 				rec.submission_deadline = False
 
 	def action_return_book_mail(self):
-		model_rec = self.env['register.date.info'].search([])
+		model_rec = self.env['issue.book.info'].search([])
 		for rec in model_rec:
-			if not rec.incoming_date:
-				print("\n\n\n",rec.outgoing_date)
-				# template = self.env.ref('library_management.issue_book_mail_id').id
-				# template_id = self.env['mail.template'].browse(template)
-				# template_id.send_mail(self.id, force_send=True)
+			template = self.env.ref('library_management.issue_book_mail_id').id
+			template_id = self.env['mail.template'].browse(template)
+			template_id.send_mail(rec.id, force_send=True)
+			# if not rec.incoming_date:
+			# 	print("\n\n\n",rec.outgoing_date)
 				# return IssueBookInfo.issue_book_mail(self)
 		# if not model_rec.incoming_date:
 		# 	print("incoming_date is not available")
@@ -78,21 +94,18 @@ class IssueBookInfo(models.Model):
 		# self.write({'books_line_ids' : [(0,0,vals)]})
 
 	def issue_book_mail(self):
-		# template=self.env.ref('library_management.issue_book_mail_id')
-		# for rec in self:
-		#     template.send_mail(int(rec.id),force_send=True)
-		template = self.env.ref('library_management.issue_book_mail_id').id
-		template_id = self.env['mail.template'].browse(template)
-		template_id.send_mail(self.id, force_send=True)
-		# return {
-		# 	'name': _('Compose Email'),
-	    #    'type': 'ir.actions.act_window',
-	    #    'view_mode': 'form',
-	    #    'res_model': 'issue.date.wizard',
-	    #    'views': [(issue_date_wizard_form_view, 'form')],
-	    #    'view_id': issue_date_wizard_form_view,
-	    #    'target': 'new',
-		# }
+		return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
+        }
+		# template = self.env.ref('library_management.issue_book_mail_id').id
+		# template_id = self.env['mail.template'].browse(template)
+		# template_id.send_mail(self.id, force_send=True)
+	
 
 
 	def return_book_view(self):
@@ -135,7 +148,20 @@ class IssueBookInfo(models.Model):
 					rec.user_address = str(res_data.street)+"\n"+str(res_data.street2)+"\n"+str(res_data.zip)+"\n"+str(res_data.city)
 
 
-	
+	@api.constrains("books_line_ids")
+	def check_book_number(self):
+		for rec in self.books_line_ids:
+			if self.env["register.books.info"].search_count([("book_name_id", "=", rec.book_name_id.id), ("books_line_id", "=", self.id)]) > 1:
+				raise ValidationError("Selected book already added in the list.")
+				# data_rec = self.env['register.books.info'].search([]).book_
+				# for data in model_rec:
+				# 	print("sngsygsag")
+				# 	if record in data:
+				# 		raise ValidationError("you cannot make same data")
+				# if record.book_name_id.name not in record.book_name_id.name:
+				# 	print("dgcedcrfyuescdgf")
+				# else:
+				# 	raise ValidationError("something went wrong")
 
 	def _compute_book_charges(self):
 		value_list = []

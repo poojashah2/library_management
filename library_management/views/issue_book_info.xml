@@ -29,6 +29,7 @@
 						<button name="return_book_view" class="oe_highlight" states="issue" string="Return" type="object"/>
 						<field name="state" widget="statusbar" statusbar_visible="draft,issue,return"/>
 						<button name="issue_book_mail" class="oe_highlight" string="Send mail" type="object"/>
+						<button name="pass_context_button" class="oe_highlight" string="pass context" context="{'data':nationality}" type="object"/>
 					</header>
 					<sheet>
 						<group>
@@ -40,6 +41,7 @@
 								<field name="issue_date"/>
 								<!-- <field name="submission_deadline"/> -->
 								<field name="charges"/>
+								<field name="nationality" widget="radio"/>
 								<!-- <field name="iss_email"/> -->
 								<!-- <field name="return_date"/> -->
 							</group>
@@ -54,14 +56,42 @@
 							</page>
 						</notebook>
 					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids"/>
+						<field name="message_ids"/>
+					</div>
 				</form>
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="view_issue_book_info_kanban">
+            <field name="name">issue.book.info.kanban</field>
+            <field name="model">issue.book.info</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <field name="user_name_id"/>
+                    <field name="user_email"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                	<strong>
+                                		<field name="user_name_id"/>
+										<field name="user_contact_no"/>
+										<field name="charges"/>
+                                	</strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
 		<record id="action_issue_book_info" model="ir.actions.act_window">
 		   <field name="name">Issue Book Info</field>
 		   <field name="res_model">issue.book.info</field>
-		   <field name="view_mode">tree,form</field>
+		   <field name="view_mode">kanban,tree,form</field>
 		</record>
 
 		<menuitem id="issue_book_info" name="Issue Book" sequence="5" action="action_issue_book_info" parent="library_management"/>

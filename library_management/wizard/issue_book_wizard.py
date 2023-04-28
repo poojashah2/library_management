@@ -9,7 +9,7 @@ class IssueBookWizard(models.TransientModel):
 	def action_confirm(self):
 		for rec in self.books_ids:
 			print("\n\n\n rec.return_quantity",rec.return_quantity)
-			issue = self.env["register.date.info"].search([('incoming_date','=',False),("entry_id", "=", self._context.get("active_id"))])
+			issue = self.env["register.date.info"].search([('book_code','=',rec.books_name_id.id),('incoming_date','=',False),("entry_id", "=", self._context.get("active_id"))])
 			for record in issue:
 				for i in range(rec.return_quantity):
 					print("\n\n\n\n record",record)

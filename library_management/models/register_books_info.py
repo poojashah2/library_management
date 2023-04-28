@@ -7,6 +7,7 @@ class RegisterBooksInfo(models.Model):
 
 	book_name_id = fields.Many2one('book.details.info',string="Book name")
 	issue_quantity = fields.Integer(string="Book Quantity")
+	returned_quantity = fields.Integer(string="Returned Quantity")
 	books_line_id = fields.Many2one('issue.book.info') #empty field
 	book_types_ids = fields.Many2many('book.type.info',string="Book Type")
 
@@ -23,6 +24,13 @@ class RegisterBooksInfo(models.Model):
 					rec.update({
 						'book_types_ids':[(6,0,record.book_type_ids.ids)]
 						})
+
+	# def _compute_returned_quantity(self):
+	# 	for rec in self:
+	# 		for record in rec.book_name_id:
+	# 			register_data = self.env['register.date.info'].search_count([('book_code','=',record.id),('incoming_date','!=',False)])
+	# 			rec.returned_quantity = 
+	# 			print("\n\n\n register_data_count",register_data)
 	# def unlink(self):
 	# 	model_rec = self.env['issue.book.info'].search([]).books_line_ids.book_name_id
 	# 	for rec in model_rec:

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sale_order_form_inherit_sale" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='other_information']/group/group[@name='sales_person']" position="inside">
+                <field name="l_name"/>                    
+            </xpath>
+            <xpath expr="//notebook/page[3]" position="after">
+                <page string="new tab" name="new_tab">
+                    <form>
+                        <group>
+                            <field name="p_name"/>
+                        </group>
+                    </form>
+                    <!-- <h1>hello</h1> -->
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

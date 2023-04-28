@@ -9,6 +9,7 @@
 					<field name="book_name_id"/>
 					<field name="book_types_ids" widget="many2many_tags"/>
 					<field name="issue_quantity"/>
+					<field name="returned_quantity"/>
 				</tree>
 			</field>
 		</record>
