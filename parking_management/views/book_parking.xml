@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="book_parking_tree_view" model="ir.ui.view">
+            <field name="name">book.parking.tree</field>
+            <field name="model">book.parking</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="customer_name_id"/>
+                    <field name="vehicle_num_plate"/>
+                    <field name="location_id"/>
+                    <field name="basement"/>
+                    <field name="slot_ids"/>
+                    <field name="vehicle_type_ids"/>
+                </tree>
+            </field>
+        </record>
+        <record id="book_parking_form_view" model="ir.ui.view">
+            <field name="name">book.parking.form</field>
+            <field name="model">book.parking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="book_parking" type="object" string="book parking" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="customer_name_id"/>
+                            <field name="vehicle_num_plate"/>
+                            <field name="location_id"/>
+                            <field name="basement"/>
+                            <field name="slot_ids" widget="many2many_tags"/>
+                            <field name="vehicle_type_ids" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_book_slots_detail" model="ir.actions.act_window">
+           <field name="name">Booking Info</field>
+           <field name="res_model">book.parking</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_book_parking" parent="menu_parking_info" name="Book parking"  sequence="2"/>
+        <menuitem id="menu_book_slots" parent="menu_book_parking" action="action_book_slots_detail" name="Book slots"  sequence="0"/>
+
+    </data>
+</odoo>

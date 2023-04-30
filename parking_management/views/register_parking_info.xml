@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="register_parking_info_tree_view" model="ir.ui.view">
+            <field name="name">register.parking.info.tree</field>
+            <field name="model">register.parking.info</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="register_name_id"/>
+                    <field name="register_slot_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_register_parking_info" model="ir.actions.act_window">
+           <field name="name">Register Parking Info</field>
+           <field name="res_model">register.parking.info</field>
+           <field name="view_mode">tree</field>
+        </record>
+
+
+        <menuitem id="menu_register_parking_info" name="Register Parking" action="action_register_parking_info" parent="menu_parking_info" sequence="5"/>
+    </data>
+</odoo>

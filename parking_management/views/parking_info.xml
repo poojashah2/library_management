@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="parking_info_tree_view" model="ir.ui.view">
+            <field name="name">parking.info.tree</field>
+            <field name="model">parking.info</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="security_name_id"/>
+                    <field name="area_name_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="parking_info_form_view" model="ir.ui.view">
+            <field name="name">parking.info.form</field>
+            <field name="model">parking.info</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="security_name_id"/>
+                            <field name="area_name_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_customer_details_report" model="ir.actions.act_window">
+           <field name="name">Parking Info</field>
+           <field name="res_model">parking.info</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="menu_parking_info" web_icon="parking_management,static/description/icon.png" name="Parking Management" action="action_customer_details_report" sequence="1"/>
+    </data>
+</odoo>
