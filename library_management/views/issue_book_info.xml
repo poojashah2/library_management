@@ -68,18 +68,19 @@
             <field name="name">issue.book.info.kanban</field>
             <field name="model">issue.book.info</field>
             <field name="arch" type="xml">
-                <kanban class="o_kanban_mobile" sample="1">
+               	<kanban default_group_by="state">
                     <field name="user_name_id"/>
                     <field name="user_email"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div t-attf-class="oe_kanban_global_click">
+                        	<div t-attf-class="oe_kanban_color_4 oe_kanban_global_click">
+                            <!-- <div t-attf-class="oe_kanban_color_5 oe_kanban_global_click"> -->
                                 <div class="oe_kanban_details">
-                                	<strong>
-                                		<field name="user_name_id"/>
-										<field name="user_contact_no"/>
-										<field name="charges"/>
-                                	</strong>
+                                	<ul>
+                                		<li><b>Customer Name: </b><field name="user_name_id"/></li>
+										<li><b>Contact No: </b><field name="user_contact_no"/></li>
+										<li><b>Customer Email: </b><field name="user_email"/></li>
+                                	</ul>
                                 </div>
                             </div>
                         </t>

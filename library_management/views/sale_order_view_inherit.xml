@@ -20,4 +20,19 @@
             </xpath>
         </field>
     </record>
+
+    <record id="sale_order_kanban_inherit_sale" model="ir.ui.view">
+        <field name="name">sale.order.kanban.inherit.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sale_order_kanban"/>
+        <field name="arch" type="xml">
+            <!-- <field name="amount_total" position="after">
+                <field name="f_name"/>
+            </field> -->
+           <xpath expr="//kanban/templates/t/div/div" position="after">
+               <!-- <h1>hello</h1> -->
+               <field name="p_name"/>
+           </xpath>
+        </field>
+    </record>
 </odoo>

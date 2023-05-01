@@ -14,6 +14,7 @@ class SaleOrder(models.Model):
 	p_name = fields.Char(string="products")
 	l_name = fields.Char(string="Last name")
 
+
 class ResPartner(models.Model):
 	_inherit = 'res.partner'
 
