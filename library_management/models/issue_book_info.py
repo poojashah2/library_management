@@ -19,6 +19,8 @@ class IssueBookInfo(models.Model):
 	return_date = fields.Date(string="Return Date",readonly=True)
 	state = fields.Selection(selection=[('draft','Draft'),('issue','Issued'),('return','Return')],string="Status",required=True,copy=False,tracking=True,default='draft',readonly=True)
 	nationality = fields.Selection(selection=[('india','India'),('pakistan','Pakistan')],string="Nationality")
+	color = fields.Integer(string="Color",compute="_compute_get_color")
+	user_image = fields.Image(string="User Image")
 
 	def pass_context_button(self):
 		# if 'aaaa' in self._context:
@@ -32,6 +34,15 @@ class IssueBookInfo(models.Model):
 				"target" : "new",
 				# "context" : context,
 			}
+
+	def _compute_get_color(self):
+		for rec in self:
+			if rec.state == 'draft':
+				rec.color = 4
+			elif rec.state == 'issue':
+				rec.color = 1
+			else:
+				rec.color = 10
 
 	def unlink(self):
 		model_rec = self.env['register.books.info'].search([('id','=',self.books_line_ids.ids)])
@@ -123,7 +134,7 @@ class IssueBookInfo(models.Model):
 
 		return {
 			"type" : "ir.actions.act_window",
-			"res_model" : "issue.book.wizard",
+			"res_model" : "return.book.wizard",
 			"name" : ("issue_book"),
 			"view_mode" : "form",
 			"target" : "new",
@@ -142,6 +153,7 @@ class IssueBookInfo(models.Model):
 				res_data = self.env["res.partner"].search([("id", "=", rec.user_name_id.id)])
 				rec.user_email = res_data.email
 				rec.user_contact_no = res_data.phone
+				rec.user_image = res_data.image_1920
 				if not res_data.street2:
 					rec.user_address = str(res_data.street)+"\n"+str(res_data.zip)+"\n"+str(res_data.city)
 				else:
@@ -171,20 +183,4 @@ class IssueBookInfo(models.Model):
 				single_charge = self.env["register.date.info"].search([("entry_id", "=", rec.id)])
 				for book in single_charge:
 					rec.charges += book.final_charge
-					if book.incoming_date:
-						value_list.append(True)
-					else:
-						value_list.append(False)
-				# if all(value_list):
-				# 	self.write({"state": "return"})
-
-				# for record in rec.books_line_ids:
-				# 	model_rec =self.env['book.details.info'].search([('id','=',record.book_name_id.id)])
-				# 	if str(rec.return_date) > str(rec.submission_deadline):
-				# 		rec.charges += model_rec.book_charges
-				# 		total_days = (rec.return_date - rec.submission_deadline).days
-				# 		if (total_days // 5) == 0:
-				# 			rec.charges = rec.charges
-				# 		else:
-				# 			for i in range((total_days // 5) - 1):
-				# 				rec.charges += rec.charges
+					

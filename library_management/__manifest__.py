@@ -17,7 +17,7 @@
         'views/book_type_info.xml',
         'views/res_partner_view_inherit.xml',
         'wizard/issue_date_wizard.xml',
-        'wizard/issue_book_wizard.xml',
+        'wizard/return_book_wizard.xml',
         'wizard/pass_context_wizard.xml',
         'report/register_date_info_report.xml',
         'report/register_date_info_report_templates.xml',

@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-	<!-- <record id="issue_date_wizard_tree_view" model="ir.ui.view">
-		<field name="name">issue.date.wizard.tree</field>
-		<field name="model">issue.date.wizard</field>
-		<field name="arch" type="xml">
-			<tree>
-				<field name="issued_date"/>
-			</tree>
-		</field>
-	</record> -->
 
 	<record id="issue_date_wizard_form_view" model="ir.ui.view">
 		<field name="name">issue.date.wizard.form</field>
@@ -26,9 +17,9 @@
 		</field>
 	</record>
 
-	<!-- <record id="action_issued_date" model="ir.actions.act_window">
-		<field name="name">Issued Date</field>
+	<record id="action_issue_date" model="ir.actions.act_window">
+		<field name="name">Issue Date</field>
 		<field name="res_model">issue.date.wizard</field>
-		<field name="view_mode">tree,form</field>
-	</record> -->
+		<field name="view_mode">form</field>
+	</record>
 </odoo>

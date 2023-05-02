@@ -16,6 +16,7 @@
 					<!-- <field name="iss_email"/> -->
 					<field name="book_names_id"/>
 					<field name="quantity"/>
+					<field name="state" widget="badge" decoration-info="state == 'draft'" decoration-danger="state == 'issue'" decoration-success="state == 'return'"/>
 				</tree>
 			</field>
 		</record>
@@ -46,6 +47,7 @@
 								<!-- <field name="return_date"/> -->
 							</group>
 							<group>
+								<field name="user_image" widget="image" style="width:100px;height:100px;"/>
 								<field name="book_names_id"/>
 								<field name="quantity"/>
 							</group>
@@ -71,16 +73,22 @@
                	<kanban default_group_by="state">
                     <field name="user_name_id"/>
                     <field name="user_email"/>
+                    <field name="color"/>
+                    <field name="user_image"/>
                     <templates>
                         <t t-name="kanban-box">
-                        	<div t-attf-class="oe_kanban_color_4 oe_kanban_global_click">
-                            <!-- <div t-attf-class="oe_kanban_color_5 oe_kanban_global_click"> -->
+                        	<div t-attf-class="#{kanban_color(record.color.raw_value)}  oe_kanban_global_click">
                                 <div class="oe_kanban_details">
-                                	<ul>
-                                		<li><b>Customer Name: </b><field name="user_name_id"/></li>
-										<li><b>Contact No: </b><field name="user_contact_no"/></li>
-										<li><b>Customer Email: </b><field name="user_email"/></li>
-                                	</ul>
+                                	<div>
+                                		<field name="user_image" widget="image"/>
+                                	</div>
+                            		<div>
+	                                	<ul>
+	                                		<li><field name="user_name_id"/></li>
+											<li><field name="user_contact_no"/></li>
+											<li><field name="user_email"/></li>
+	                                	</ul>
+                            		</div>
                                 </div>
                             </div>
                         </t>
@@ -92,7 +100,7 @@
 		<record id="action_issue_book_info" model="ir.actions.act_window">
 		   <field name="name">Issue Book Info</field>
 		   <field name="res_model">issue.book.info</field>
-		   <field name="view_mode">kanban,tree,form</field>
+		   <field name="view_mode">tree,kanban,form</field>
 		</record>
 
 		<menuitem id="issue_book_info" name="Issue Book" sequence="5" action="action_issue_book_info" parent="library_management"/>
