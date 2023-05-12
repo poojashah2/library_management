@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="confirmation_booking_wizard_form_view" model="ir.ui.view">
+		<field name="name">confirmation.booking.wizard.form.view</field>
+		<field name="model">confirmation.booking.wizard</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="select_terms"/>
+					</group>
+				</sheet>
+				<footer>
+					<button special="cancel" data-hotkey="z" string="Cancel" class="btn-secondary"/>
+					<button name="action_confirm" data-hotkey="q" string="Confirm" type="object" class="btn-primary"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_confirmation_booking_wizard" model="ir.actions.act_window">
+		<field name="name">Confirmation Booking</field>
+		<field name="res_model">confirmation.booking.wizard</field>
+		<field name="view_mode">form</field>
+	</record>
+</odoo>

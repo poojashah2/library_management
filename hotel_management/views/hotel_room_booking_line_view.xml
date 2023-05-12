@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="hotel_room_booking_line_tree_view" model="ir.ui.view">
+			<field name="name">hotel.room.booking.line.tree</field>
+			<field name="model">hotel.room.booking.line</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="hotel_room_id"/>
+					<field name="num_of_adults"/>
+					<field name="num_of_children"/>
+					<field name="price"/>
+				</tree>
+			</field>
+		</record>
+		<record id="hotel_room_booking_line_form_view" model="ir.ui.view">
+			<field name="name">hotel.room.booking.line.form</field>
+			<field name="model">hotel.room.booking.line</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="hotel_room_id"/>
+							<field name="num_of_adults"/>
+							<field name="num_of_children"/>
+							<field name="price"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_hotel_room_booking_line" model="ir.actions.act_window">
+		   <field name="name">Hotel Room Booking Line</field>
+		   <field name="res_model">hotel.room.booking.line</field>
+		   <field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="hotel_room_booking_line" action="action_hotel_room_booking_line" name="Hotel room booking line" parent="menu_hotel_management" sequence="4"/>
+	</data>
+</odoo>

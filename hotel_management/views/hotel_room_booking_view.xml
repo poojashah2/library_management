@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="hotel_room_booking_tree_view" model="ir.ui.view">
+			<field name="name">hotel.room.booking.tree</field>
+			<field name="model">hotel.room.booking</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="hotel_names_id"/>
+					<field name="customer_name_id"/>
+					<field name="customer_address"/>
+					<field name="customer_email"/>
+					<field name="check_in_date"/>
+					<field name="check_out_date"/>
+					<field name="hotel_room_book_line_ids"/>
+				</tree>
+			</field>
+		</record>
+		<record id="hotel_room_booking_form_view" model="ir.ui.view">
+			<field name="name">hotel.room.booking.form</field>
+			<field name="model">hotel.room.booking</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="booked_room" class="oe_highlight" states="draft" string="Booked" type="object"/>
+						<button name="cancel_room" class="oe_highlight" states="booked" string="Cancel" type="object"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,booked,cancel"/>
+						<button name="send_booking_email" class="oe_highlight" string="Send booking email" type="object"/>
+					</header>
+					<sheet>
+						<group>
+							<field name="hotel_names_id"/>
+							<field name="customer_name_id"/>
+							<field name="customer_address"/>
+							<field name="customer_email"/>
+							<field name="check_in_date"/>
+							<field name="check_out_date"/>
+							<field name="hotel_room_book_line_ids" context="{'data':hotel_names_id}">
+								<tree string="" editable="bottom">
+									<field name="hotel_room_id" context="{'record':context.get('data')}"/>
+									<field name="num_of_adults"/>
+									<field name="num_of_children"/>
+									<field name="price"/>
+								</tree>
+							</field>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_hotel_room_booking" model="ir.actions.act_window">
+		   <field name="name">Hotel Room Booking</field>
+		   <field name="res_model">hotel.room.booking</field>
+		   <field name="view_mode">tree,form</field>
+		</record>
+
+
+		
+		<menuitem id="menu_hotel_room_booking" name="Hotel room booking" sequence="4" action="action_hotel_room_booking" parent="menu_hotel_management"/>
+
+	</data>
+</odoo>
