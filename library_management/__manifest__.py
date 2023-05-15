@@ -14,6 +14,8 @@
         'views/register_date_info.xml',
         'views/book_type_info.xml',
         'wizard/issue_date_wizard.xml',
+        'report/register_date_report.xml',
+        'report/register_date_report_templates.xml',
     ],
     'installable' : True,
     'application' : True,

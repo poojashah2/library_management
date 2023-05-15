@@ -16,8 +16,8 @@ class RegisterBooksInfo(models.Model):
 		for rec in self:
 			book_type = self.env['book.details.info'].search([('id', '=', self.book_name_id.id)])
 			print(":::::::::;>>>>>>>>>>>",book_type.id,self.book_name_id.id)
-			issue_book_read = self.env['issue.book.info']._read_group_raw([('user_email','!=',False)],['user_email','quantity'],['user_email'])
-			print(":::::::>>>>>>issue_book_read",issue_book_read)
+			# issue_book_read = self.env['issue.book.info']._read_group_raw([('user_email','!=',False)],['user_email','quantity'],['user_email'])
+			# print(":::::::>>>>>>issue_book_read",issue_book_read)
 			for record in book_type:
 				if record.id == self.book_name_id.id:
 					rec.update({

@@ -11,7 +11,7 @@
 					<field name="user_contact_no"/>
 					<field name="user_email"/>
 					<field name="user_address"/>
-					<field name="submission_deadline"/>
+					<!-- <field name="submission_deadline"/> -->
 					<!-- <field name="charges"/> -->
 					<!-- <field name="iss_email"/> -->
 					<field name="book_names_id"/>
@@ -38,7 +38,7 @@
 								<field name="user_email"/>
 								<field name="user_address"/>
 								<field name="issue_date"/>
-								<field name="submission_deadline"/>
+								<!-- <field name="submission_deadline"/> -->
 								<!-- <field name="charges"/> -->
 								<!-- <field name="iss_email"/> -->
 								<field name="return_date"/>

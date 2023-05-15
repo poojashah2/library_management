@@ -11,7 +11,7 @@ class IssueBookInfo(models.Model):
 	user_address = fields.Text(string="User Address")
 	book_names_id = fields.Many2one('book.details.info',string="Book name")
 	quantity = fields.Integer(string="Quantity")
-	submission_deadline = fields.Date(compute="_compute_submission_deadline",string="Return Book Deadline")
+	# submission_deadline = fields.Date(compute="_compute_submission_deadline",string="Return Book Deadline")
 	# charges = fields.Integer(compute="_compute_book_charges",string="")
 	issue_date = fields.Date(string="Issue Date", readonly=True)
 	return_date = fields.Date(string="Return Date",readonly=True)
@@ -31,6 +31,8 @@ class IssueBookInfo(models.Model):
 	# 	return super(IssueBookInfo,self).unlink()
 
 	def issued_book_view(self):
+		new_data = self.env['book.author.info'].search_read([('id','>',0)])
+		print(">>:L:LDGETFrtg",new_data)
 		# for rec in self:
 		# 	# rec.write({'state':"issue"})
 		# 	# rec.issue_date = date.today()
@@ -64,15 +66,15 @@ class IssueBookInfo(models.Model):
 		template = self.env.ref('library_management.issue_book_mail_id').id
 		template_id = self.env['mail.template'].browse(template)
 		template_id.send_mail(self.id, force_send=True)
-		return {
-			'name': _('Compose Email'),
-	       'type': 'ir.actions.act_window',
-	       'view_mode': 'form',
-	       'res_model': 'issue.date.wizard',
-	       'views': [(issue_date_wizard_form_view, 'form')],
-	       'view_id': issue_date_wizard_form_view,
-	       'target': 'new',
-		}
+		# return {
+		# 	'name': _('Compose Email'),
+	    #    'type': 'ir.actions.act_window',
+	    #    'view_mode': 'form',
+	    #    'res_model': 'issue.date.wizard',
+	    #    'views': [(issue_date_wizard_form_view, 'form')],
+	    #    'view_id': issue_date_wizard_form_view,
+	    #    'target': 'new',
+		# }
 
 
 	# def return_book_view(self):
@@ -99,12 +101,7 @@ class IssueBookInfo(models.Model):
 					rec.user_address = str(res_data.street)+"\n"+str(res_data.street2)+"\n"+str(res_data.zip)+"\n"+str(res_data.city)
 
 
-	def _compute_submission_deadline(self):
-		for rec in self:
-			if rec.issue_date:
-				rec.submission_deadline = rec.issue_date + timedelta(days=15)
-			else:
-				rec.submission_deadline = False
+	
 
 	# def _compute_book_charges(self):
 	# 	for rec in self:
