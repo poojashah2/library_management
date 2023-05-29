@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from datetime import date
+from datetime import date,timedelta
 
 class IssueBookInfo(models.Model):
 	_name = 'issue.book.info'
@@ -9,6 +9,10 @@ class IssueBookInfo(models.Model):
 	user_contact_no = fields.Char(string='User Contact No')
 	user_email = fields.Char(string="User Email Id")
 	user_address = fields.Text(string="User Address")
+	book_names_id = fields.Many2one('book.details.info',string="Book name")
+	quantity = fields.Integer(string="Quantity")
+	submission_deadline = fields.Date(compute="_compute_submission_deadline",string="Return Book Deadline")
+	charges = fields.Integer(compute="_compute_book_charges",string="")
 	issue_date = fields.Date(string="Issue Date", readonly=True)
 	return_date = fields.Date(string="Return Date",readonly=True)
 	state = fields.Selection(selection=[('draft','Draft'),('issue','Issued'),('return','Return')],string="Status",required=True,copy=False,tracking=True,default='draft',readonly=True)
@@ -38,11 +42,11 @@ class IssueBookInfo(models.Model):
 						"book_code": line.book_name_id.id,
 					}]
 					create_data = self.env["register.date.info"].create(register_id)
-		vals = {
-			"book_name_id" : "33",
-			"issue_quantity" : 2,
-		}
-		self.write({'books_line_ids' : [(0,0,vals)]})
+		# vals = {
+		# 	"book_name_id" : "33",
+		# 	"issue_quantity" : 2,
+		# }
+		# self.write({'books_line_ids' : [(0,0,vals)]})
 
 
 	def return_book_view(self):
@@ -65,3 +69,27 @@ class IssueBookInfo(models.Model):
 					rec.user_address = str(res_data.street)+"\n"+str(res_data.zip)+"\n"+str(res_data.city)
 				else:
 					rec.user_address = str(res_data.street)+"\n"+str(res_data.street2)+"\n"+str(res_data.zip)+"\n"+str(res_data.city)
+
+
+
+	def _compute_submission_deadline(self):
+		for rec in self:
+			if rec.issue_date:
+				rec.submission_deadline = rec.issue_date + timedelta(days=15)
+			else:
+				rec.submission_deadline = False
+
+	def _compute_book_charges(self):
+		for rec in self:
+			rec.charges = 0
+			if rec.return_date:
+				for record in rec.books_line_ids:
+					model_rec =self.env['book.details.info'].search([('id','=',record.book_name_id.id)])
+					if str(rec.return_date) > str(rec.submission_deadline):
+						rec.charges += model_rec.book_charges
+						total_days = (rec.return_date - rec.submission_deadline).days
+						if (total_days // 5) == 0:
+							rec.charges = rec.charges
+						else:
+							for i in range((total_days // 5) - 1):
+								rec.charges += rec.charges

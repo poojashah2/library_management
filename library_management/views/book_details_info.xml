@@ -10,6 +10,7 @@
 					<field name="name"/>
 					<field name="price"/>
 					<field name="pages"/>
+					<field name="book_charges"/>
 					<field name="book_type_ids"/>
 					<field name="author_name_id"/>
 					<field name="book_quantity"/>
@@ -35,6 +36,7 @@
 							<field name="name"/>
 							<field name="price"/>
 							<field name="pages"/>
+							<field name="book_charges"/>
 							<field name="book_type_ids"/>
 							<field name="author_name_id"/>
 							<field name="book_quantity"/>

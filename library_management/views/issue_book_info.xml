@@ -11,6 +11,10 @@
 					<field name="user_contact_no"/>
 					<field name="user_email"/>
 					<field name="user_address"/>
+					<field name="submission_deadline"/>
+					<field name="charges"/>
+					<field name="book_names_id"/>
+					<field name="quantity"/>
 				</tree>
 			</field>
 		</record>
@@ -26,14 +30,26 @@
 					</header>
 					<sheet>
 						<group>
-							<field name="user_name_id"/>
-							<field name="books_line_ids"/>
-							<field name="user_contact_no"/>
-							<field name="user_email"/>
-							<field name="user_address"/>
-							<field name="issue_date"/>
-							<field name="return_date"/>
+							<group>
+								<field name="user_name_id"/>
+								<field name="user_contact_no"/>
+								<field name="user_email"/>
+								<field name="user_address"/>
+								<field name="issue_date"/>
+								<field name="submission_deadline"/>
+								<field name="charges"/>
+								<field name="return_date"/>
+							</group>
+							<group>
+								<field name="book_names_id"/>
+								<field name="quantity"/>
+							</group>
 						</group>
+						<notebook>
+							<page string="Book">
+								<field name="books_line_ids"/>
+							</page>
+						</notebook>
 					</sheet>
 				</form>
 			</field>

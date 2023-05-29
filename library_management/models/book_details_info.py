@@ -9,6 +9,7 @@ class BookDeatailsInfo(models.Model):
 	pages = fields.Integer(string="Pages")
 	author_name_id = fields.Many2one('book.author.info',string="Author name")
 	book_quantity = fields.Integer(string="Books Quantity")
+	book_charges = fields.Integer(string="Book Charges")
 	book_type_ids = fields.Many2many('book.type.info',string="Book Type")
 	book_count =fields.Integer(string="Book count",compute="_compute_available_book_count")
 	
