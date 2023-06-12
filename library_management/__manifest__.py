@@ -7,6 +7,7 @@
         'security/ir.model.access.csv',
         'data/ir_sequence_book.xml',
         'data/mail_template_data.xml',
+        'data/issue_book_data.xml',
         'views/book_author_info.xml',
         'views/book_details_info.xml',
         'views/register_books_info.xml',

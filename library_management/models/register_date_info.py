@@ -16,9 +16,6 @@ class RegisterDateInfo(models.Model):
 	
 	def return_button(self):
 		self.incoming_date = date.today()
-		for rec in self:
-			model_rec = self.env['issue.book.info'].search([('id','=',rec.entry_id)])
-			print("bgyueftedcf",model_rec)
 			# for record in model_rec:
 			# 	if record == rec.entry_id and incoming_date != False:
 			# 		record.write({'state':'return'})

@@ -12,7 +12,7 @@ class IssueBookInfo(models.Model):
 	book_names_id = fields.Many2one('book.details.info',string="Book name")
 	quantity = fields.Integer(string="Quantity")
 	# submission_deadline = fields.Date(compute="_compute_submission_deadline",string="Return Book Deadline")
-	# charges = fields.Integer(compute="_compute_book_charges",string="")
+	charges = fields.Integer(compute="_compute_book_charges",string="Total charges")
 	issue_date = fields.Date(string="Issue Date", readonly=True)
 	return_date = fields.Date(string="Return Date",readonly=True)
 	state = fields.Selection(selection=[('draft','Draft'),('issue','Issued'),('return','Return')],string="Status",required=True,copy=False,tracking=True,default='draft',readonly=True)
@@ -103,17 +103,28 @@ class IssueBookInfo(models.Model):
 
 	
 
-	# def _compute_book_charges(self):
-	# 	for rec in self:
-	# 		rec.charges = 0
-	# 		if rec.return_date:
-	# 			for record in rec.books_line_ids:
-	# 				model_rec =self.env['book.details.info'].search([('id','=',record.book_name_id.id)])
-	# 				if str(rec.return_date) > str(rec.submission_deadline):
-	# 					rec.charges += model_rec.book_charges
-	# 					total_days = (rec.return_date - rec.submission_deadline).days
-	# 					if (total_days // 5) == 0:
-	# 						rec.charges = rec.charges
-	# 					else:
-	# 						for i in range((total_days // 5) - 1):
-	# 							rec.charges += rec.charges
+	def _compute_book_charges(self):
+		value_list = []
+		for rec in self:
+			rec.charges = 0
+			if rec.issue_date:
+				single_charge = self.env["register.date.info"].search([("entry_id", "=", rec.id)])
+				for book in single_charge:
+					rec.charges += book.final_charge
+					if book.incoming_date:
+						value_list.append(True)
+					else:
+						value_list.append(False)
+				if all(value_list):
+					self.write({"state": "return"})
+
+				# for record in rec.books_line_ids:
+				# 	model_rec =self.env['book.details.info'].search([('id','=',record.book_name_id.id)])
+				# 	if str(rec.return_date) > str(rec.submission_deadline):
+				# 		rec.charges += model_rec.book_charges
+				# 		total_days = (rec.return_date - rec.submission_deadline).days
+				# 		if (total_days // 5) == 0:
+				# 			rec.charges = rec.charges
+				# 		else:
+				# 			for i in range((total_days // 5) - 1):
+				# 				rec.charges += rec.charges

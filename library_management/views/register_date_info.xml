@@ -10,8 +10,8 @@
 					<field name="customer_name"/>
 					<field name="book_code"/>
 					<field name="books_name"/>
-					<!-- <field name="late_charges"/> -->
-					<field name="final_charge"/>
+					<field name="late_charges"/>
+					<!-- <field name="final_charge"/> -->
 					<field name="incoming_date"/>
 					<field name="outgoing_date"/>
 					<field name="submission_deadline"/>
