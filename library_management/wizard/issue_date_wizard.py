@@ -14,7 +14,7 @@ class IssueBookWizard(models.TransientModel):
 		for line in issue.books_line_ids:
 			for _ in range(line.issue_quantity):
 				register_id = [{
-					"entry_id": line.id,
+					"entry_id": issue.id,
 					"outgoing_date": issue.issue_date,
 					"book_code": line.book_name_id.id,
 					"books_name":line.book_name_id.name,

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template id="report_registerdate">
+	    <t t-call="web.html_container">
+	    	<t t-foreach="docs" t-as="doc">
+		    	<t t-call="web.external_layout">
+		    		<!-- <h1>Hello world</h1> -->
+		    		<table class="table table-striped table-primary"> 
+		    			<thead>
+		    				<tr>
+			    				<th>User Name</th>
+			    				<th>Books Name</th>
+			    				<th>Incoming Date</th>
+			    				<th>Outgoing Date</th>
+			    			</tr>
+		    			</thead>
+		    			<tbody>
+		    				<tr>
+		    					<td><t t-out="doc.customer_name"/></td>
+		    					<td><t t-out="doc.books_name"/></td>
+		    					<td><t t-out="doc.incoming_date"/></td>
+		    					<td><t t-out="doc.outgoing_date"/></td>
+		    				</tr>
+		    			</tbody>
+		    		</table>
+	    		<!-- <span> User Name : <span t-field='doc.customer_name'/></span><br/>
+	    		<span> Books Name : <span t-field='doc.books_name'/></span><br/>
+	    		<span> Incoming Date : <span t-field='doc.incoming_date'/></span><br/>
+	    		<span> Outgoing Date : <span t-field='doc.outgoing_date'/></span><br/>
+	 -->
+		    	</t>
+		    </t>
+	    </t>
+	</template>
+</odoo>
